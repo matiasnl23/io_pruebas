@@ -1,0 +1,65 @@
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>MatDESK</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <header id='header'>
+
+    </header>
+    <section id="app-principal">
+
+    </section>
+
+    <!-- <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      $(() => {
+        $.get('plantillas/general/top_bar.html', (res) => {
+          $("#header").html(res);
+        });
+
+        $.get('plantillas/principal/chat.html', (res) => {
+          $("#app-principal").html(res);
+        })
+
+
+      });
+      var html ="";
+      function enviar_mensaje(e) {
+        socket.emit('new_message', {
+          contenido: $(e).val(),
+        });
+
+        $(e).val('');
+      }
+      function enviar_mensaje_enter(e, that) {
+        if(e.keyCode == 13) {
+          socket.emit('new_message', {
+            contenido: $(that).val(),
+          })
+          $(that).val('');
+        }
+      }
+
+      var socket = io.connect('http://192.168.0.4:3000');
+      socket.on('status', function (data) {
+        console.log(data);
+      });
+
+      socket.on('global_message', (data) => {
+        html += data.mensaje + '<br>';
+        $("#chat-box").html(html);
+      });
+    </script>
+  </body>
+</html>

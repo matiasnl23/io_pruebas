@@ -1,0 +1,16 @@
+{
+  "name": "io",
+  "version": "1.0.0",
+  "description": "Prueba con Sockets",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon index.js"
+  },
+  "author": "Matías Lobo",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.3",
+    "nodemon": "^1.11.0",
+    "socket.io": "^2.0.3"
+  }
+}
